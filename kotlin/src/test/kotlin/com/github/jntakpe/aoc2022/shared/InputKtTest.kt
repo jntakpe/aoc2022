@@ -35,7 +35,7 @@ internal class InputKtTest {
 
         @Test
         fun `should return numbers`() {
-            assertEquals(listOf(199, 200, 208, 210, 200, 207, 240, 269, 260, 263), readInputNumbers(1))
+            assertEquals(listOf(199, 200, 208, 210, 200, 207, 240, 269, 260, 263), readInputNumbers(27))
         }
     }
 
