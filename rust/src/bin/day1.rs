@@ -11,7 +11,7 @@ struct Day1 {
 }
 
 impl Day1 {
-    fn group_elf(&self) -> Vec<usize> {
+    fn elves_calories(&self) -> Vec<usize> {
         self.input
             .split(|s| s.is_empty())
             .map(|l| l.iter().map(|s| s.parse::<usize>().unwrap()).sum())
@@ -21,14 +21,14 @@ impl Day1 {
 
 impl Day for Day1 {
     fn part1(&self) -> usize {
-        *self.group_elf()
+        *self.elves_calories()
             .iter()
             .max()
             .unwrap()
     }
 
     fn part2(&self) -> usize {
-        let mut elves = self.group_elf();
+        let mut elves = self.elves_calories();
         elves.sort_by(|a, b| b.cmp(a));
         elves.iter().take(3).sum()
     }
