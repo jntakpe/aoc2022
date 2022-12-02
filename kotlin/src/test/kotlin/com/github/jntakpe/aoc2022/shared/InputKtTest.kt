@@ -19,7 +19,7 @@ internal class InputKtTest {
                 "up 3",
                 "down 8",
                 "forward 2",
-            ), readInputLines(2))
+            ), readInputLines(28))
         }
 
         @Test
@@ -73,7 +73,7 @@ iyr:2011 ecl:brn hgt:59in"""), lines)
                 up 3
                 down 8
                 forward 2
-                """.trimIndent(), readInput(2))
+                """.trimIndent(), readInput(28))
         }
     }
 }

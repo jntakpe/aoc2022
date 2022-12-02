@@ -1,11 +1,12 @@
 package com.github.jntakpe.aoc2022
 
 import com.github.jntakpe.aoc2022.days.day1.Day1
+import com.github.jntakpe.aoc2022.days.day2.Day2
 
 fun main(args: Array<String>) {
     when (val day = args[0].toInt()) {
         1 -> Day1.run()
-//        2 -> Day2.run()
+        2 -> Day2.run()
 //        3 -> Day3.run()
 //        4 -> Day4.run()
 //        5 -> Day5.run()
