@@ -19,7 +19,7 @@ object Day2 : Day {
             .sumOf { (a, b) -> a.score(b) }
     }
 
-    enum class Shape(val score: Int) {
+    enum class Shape(private val score: Int) {
         ROCK(1),
         PAPER(2),
         SCISSORS(3);

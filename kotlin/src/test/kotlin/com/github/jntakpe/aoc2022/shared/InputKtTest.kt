@@ -24,7 +24,7 @@ internal class InputKtTest {
 
         @Test
         fun `should ignore empty lines`() {
-            val lines = readInputLines(3)
+            val lines = readInputLines(29)
             assertEquals(12, lines.size)
             assertFalse(lines.contains(""))
         }
