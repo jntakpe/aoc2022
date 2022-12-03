@@ -7,7 +7,7 @@ fn main() {
             .map(|l| {
                 let chars: Vec<char> = l
                     .split_whitespace()
-                    .map(|w| w.chars().nth(0).unwrap())
+                    .map(|w| w.chars().next().unwrap())
                     .collect();
                 (chars[0], chars[1])
             })
