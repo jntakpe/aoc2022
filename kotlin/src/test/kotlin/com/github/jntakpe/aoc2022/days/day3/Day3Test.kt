@@ -1,6 +1,5 @@
 package com.github.jntakpe.aoc2022.days.day3
 
-import com.github.jntakpe.aoc2022.days.day2.Day3
 import com.github.jntakpe.aoc2022.shared.DayTest
 
 internal class Day3Test : DayTest<Day3>() {
