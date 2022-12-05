@@ -6,9 +6,9 @@ interface Day {
 
     val input: Any
 
-    fun part1(): Number
+    fun part1(): Any
 
-    fun part2(): Number
+    fun part2(): Any
 
     fun run() {
         measureTimeMillis {
