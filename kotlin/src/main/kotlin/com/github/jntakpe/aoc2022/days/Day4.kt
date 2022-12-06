@@ -1,4 +1,4 @@
-package com.github.jntakpe.aoc2022.days.day4
+package com.github.jntakpe.aoc2022.days
 
 import com.github.jntakpe.aoc2022.shared.Day
 import com.github.jntakpe.aoc2022.shared.readInputLines

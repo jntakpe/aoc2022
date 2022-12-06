@@ -1,4 +1,4 @@
-package com.github.jntakpe.aoc2022.days.day2
+package com.github.jntakpe.aoc2022.days
 
 import com.github.jntakpe.aoc2022.shared.DayTest
 

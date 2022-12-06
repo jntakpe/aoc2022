@@ -1,4 +1,4 @@
-package com.github.jntakpe.aoc2022.days.day6
+package com.github.jntakpe.aoc2022.days
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

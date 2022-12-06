@@ -1,6 +1,5 @@
-package com.github.jntakpe.aoc2022.days.day6
+package com.github.jntakpe.aoc2022.days
 
-import com.github.jntakpe.aoc2022.days.day5.Day5
 import com.github.jntakpe.aoc2022.shared.Day
 import com.github.jntakpe.aoc2022.shared.readInput
 
