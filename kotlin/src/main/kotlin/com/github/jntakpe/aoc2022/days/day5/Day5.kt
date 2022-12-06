@@ -9,7 +9,7 @@ object Day5 : Day {
 
     override fun part1() = input.moveAll(false).print()
 
-    override fun part2(): String = input.moveAll(true).print()
+    override fun part2() = input.moveAll(true).print()
 
     data class Move(val items: Int, val from: Int, val to: Int)
 
