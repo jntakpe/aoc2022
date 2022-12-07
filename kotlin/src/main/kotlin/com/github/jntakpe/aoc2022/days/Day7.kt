@@ -5,95 +5,87 @@ import com.github.jntakpe.aoc2022.shared.readInputLines
 
 object Day7 : Day {
 
-    override val input = readInputLines(7)
+    override val input = buildTree(parseCommands(readInputLines(7)))
 
-    override fun part1(): Any {
-        val mutableListOf = mutableListOf<Long>()
-        total(buildTree(parseCommands(input)), mutableListOf)
-        return mutableListOf.filter { it <= 100000 }.sum()
+    override fun part1() = input.dirSizes().filter { it <= 100000 }.sum()
 
-    }
+    override fun part2() = input.dirSizes().run { filter { it >= 30000000 - (70000000 - max()) }.min() }
 
-    override fun part2(): Any {
-        val sizes = mutableListOf<Long>()
-        total(buildTree(parseCommands(input)), sizes)
-        val unused = 70000000 - sizes.max()
-        val toFree = 30000000 - unused
-        val filter = sizes.filter { it >= toFree }
-        return filter.min()
-    }
-
-    fun total(current: Directory, dirs: MutableList<Long>) {
-        dirs.add(current.totalSize())
-        current.directories.values.forEach { total(it, dirs) }
-    }
-
-    data class Directory(
+    class Directory(
         val parent: Directory?,
         var directories: Map<String, Directory> = emptyMap(),
         var files: List<Long> = emptyList()
     ) {
 
-        fun totalSize(): Long {
-            return directories.values.sumOf { it.totalSize() } + files.sum()
+        fun root(): Directory {
+            var cwd = this
+            while (cwd.parent != null) {
+                cwd = cwd.parent!!
+            }
+            return cwd
         }
 
+        fun dirSizes(cwd: Directory = this): List<Long> = buildList {
+            add(cwd.size())
+            cwd.directories.values.forEach { addAll(dirSizes(it)) }
+        }
+
+        private fun size(): Long = directories.values.sumOf { it.size() } + files.sum()
     }
 
     sealed interface Command {
-        class CD(val path: String) : Command {
+        class CD(private val path: String) : Command {
 
-            fun navigate(current: Directory): Directory {
+            fun navigate(cwd: Directory): Directory {
                 return when (path) {
-                    "/" -> {
-                        var dir = current
-                        while (dir.parent != null) {
-                            dir = dir.parent!!
-                        }
-                        return dir
-                    }
-
-                    ".." -> current.parent!!
-                    else -> current.directories.getValue(path)
+                    "/" -> cwd.root()
+                    ".." -> cwd.parent!!
+                    else -> cwd.directories.getValue(path)
                 }
             }
         }
 
-        class LS(val result: List<String>) : Command {
+        class LS(private val sdtout: List<String>) : Command {
 
             fun update(current: Directory) {
-                if (current.directories.isEmpty()) {
-                    current.directories = result
-                        .filter { it.startsWith("dir") }
-                        .map { it.substring(4).trim() }
-                        .associateWith { Directory(current) }
-                }
-                current.files = result
+                current.directories = subdirectories(current)
+                current.files = sizes()
+            }
+
+            private fun sizes(): List<Long> {
+                return sdtout
                     .filter { !it.startsWith("dir") }
                     .map { it.split(" ").first().toLong() }
+            }
+
+            private fun subdirectories(current: Directory): Map<String, Directory> {
+                return sdtout
+                    .filter { it.startsWith("dir") }
+                    .map { it.substring(4).trim() }
+                    .associateWith { Directory(current) }
             }
         }
     }
 
-    fun parseCommands(lines: List<String>): List<Command> {
+    private fun parseCommands(lines: List<String>): List<Command> {
         return buildList {
             lines.forEachIndexed { i, s ->
                 when {
                     s.startsWith("$ cd") -> add(Command.CD(s.substring(4).trim()))
-                    s.startsWith("$ ls") -> add(Command.LS(lines.drop(i + 1).takeWhile { l -> l.first() != '$' }))
+                    s.startsWith("$ ls") -> add(Command.LS(lines.drop(i + 1).takeWhile { it.first() != '$' }))
                 }
             }
         }
     }
 
-    fun buildTree(commands: List<Command>): Directory {
-        var current = Directory(null)
+    private fun buildTree(commands: List<Command>): Directory {
+        var cwd = Directory(null)
         commands.forEach {
             when (it) {
-                is Command.CD -> current = it.navigate(current)
-                is Command.LS -> it.update(current)
+                is Command.CD -> cwd = it.navigate(cwd)
+                is Command.LS -> it.update(cwd)
             }
         }
-        return Command.CD("/").navigate(current)
+        return cwd.root()
     }
 }
