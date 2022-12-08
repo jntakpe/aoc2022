@@ -22,13 +22,12 @@ object Day8 : Day {
 
     private fun isVisible(x: Int, y: Int, size: Int, positions: Array<Array<Int>>): Boolean {
         val edge = positions.lastIndex
-        if (listOf(x, y).any { it in listOf(0, edge) }) return true
-        if (hasTree(0 until x, positions[y], size)) return true
-        if (hasTree(x + 1..edge, positions[y], size)) return true
         val column = (0..edge).map { positions[it][x] }.toTypedArray()
-        if (hasTree(0 until y, column, size)) return true
-        if (hasTree(y + 1..edge, column, size)) return true
-        return false
+        return listOf(x, y).any { it in listOf(0, edge) } ||
+                hasTree(0 until x, positions[y], size) ||
+                hasTree(x + 1..edge, positions[y], size) ||
+                hasTree(0 until y, column, size) ||
+                hasTree(y + 1..edge, column, size)
     }
 
     private fun scenicScore(x: Int, y: Int, size: Int, positions: Array<Array<Int>>): Int {
