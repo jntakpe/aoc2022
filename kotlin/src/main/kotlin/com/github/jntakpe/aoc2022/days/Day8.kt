@@ -8,92 +8,42 @@ object Day8 : Day {
 
     override val input = readInputLines(8).map { c -> c.map { it.digitToInt() }.toTypedArray() }.toTypedArray()
 
-    override fun part1(): Any {
+    override fun part1(): Int {
         return input
-            .flatMapIndexed { y, a -> a.mapIndexed { x, v -> isVisible(x to y, v, input) } }
+            .flatMapIndexed { y, a -> a.mapIndexed { x, v -> isVisible(x, y, v, input) } }
             .count { it }
     }
 
-    override fun part2(): Any {
+    override fun part2(): Int {
         return input
-            .flatMapIndexed { y, a -> a.mapIndexed { x, v -> distance(x to y, v, input) } }
+            .flatMapIndexed { y, a -> a.mapIndexed { x, v -> scenicScore(x, y, v, input) } }
             .max()
     }
 
-    fun isVisible(position: Pair<Int, Int>, size: Int, allPositions: Array<Array<Int>>): Boolean {
-        val columnEnd = allPositions.lastIndex
-        val rowEnd = allPositions[0].lastIndex
-        val edges = setOf(0, columnEnd, rowEnd)
-        if (position.first in edges || position.second in edges) return true
-        ///
-        var x = position.first
-        var visible = true
-        while (x > 0 && visible) {
-            x--
-            visible = allPositions[position.second][x] < size
-        }
-        if (visible) {
-            return visible
-        }
-        visible = true
-        x = position.first
-        while (x < columnEnd && visible) {
-            x++
-            visible = allPositions[position.second][x] < size
-        }
-        if (visible) {
-            return visible
-        }
-        visible = true
-        var y = position.second
-        while (y > 0 && visible) {
-            y--
-            visible = allPositions[y][position.first] < size
-        }
-        if (visible) {
-            return visible
-        }
-        visible = true
-        y = position.second
-        while (y < rowEnd && visible) {
-            y++
-            visible = allPositions[y][position.first] < size
-        }
-        return visible
+    private fun isVisible(x: Int, y: Int, size: Int, positions: Array<Array<Int>>): Boolean {
+        val edge = positions.lastIndex
+        if (listOf(x, y).any { it in listOf(0, edge) }) return true
+        if (hasTree(0 until x, positions[y], size)) return true
+        if (hasTree(x + 1..edge, positions[y], size)) return true
+        val column = (0..edge).map { positions[it][x] }.toTypedArray()
+        if (hasTree(0 until y, column, size)) return true
+        if (hasTree(y + 1..edge, column, size)) return true
+        return false
     }
 
-    fun distance(position: Pair<Int, Int>, size: Int, allPositions: Array<Array<Int>>): Int {
-        val columnEnd = allPositions.lastIndex
-        val rowEnd = allPositions[0].lastIndex
-        val edges = setOf(0, columnEnd, rowEnd)
-        var x = position.first
-        var visible = true
-        while (x > 0 && visible) {
-            x--
-            visible = allPositions[position.second][x] < size
-        }
-        var score = abs(x - position.first)
-        visible = true
-        x = position.first
-        while (x < columnEnd && visible) {
-            x++
-            visible = allPositions[position.second][x] < size
-        }
-        score *= abs(x - position.first)
-        visible = true
-        var y = position.second
-        while (y > 0 && visible) {
-            y--
-            visible = allPositions[y][position.first] < size
-        }
-        score *= abs(y - position.second)
-        visible = true
-        y = position.second
-        while (y < rowEnd && visible) {
-            y++
-            visible = allPositions[y][position.first] < size
-        }
-        score *= abs(y - position.second)
+    private fun scenicScore(x: Int, y: Int, size: Int, positions: Array<Array<Int>>): Int {
+        val edge = positions.lastIndex
+        if (listOf(x, y).any { it in listOf(0, edge) }) return 0
+        var score = view(x - 1 downTo 0, positions[y], size)
+        score *= view(x + 1..edge, positions[y], size)
+        val column = (0..edge).map { positions[it][x] }.toTypedArray()
+        score *= view(y - 1 downTo 0, column, size)
+        score *= view(y + 1..edge, column, size)
         return score
+    }
+
+    private fun hasTree(range: IntRange, line: Array<Int>, size: Int) = !range.any { line[it] >= size }
+    private fun view(range: IntProgression, line: Array<Int>, size: Int): Int {
+        return (range.indexOfFirst { line[it] >= size }.takeIf { it >= 0 } ?: abs(range.first - range.last)) + 1
     }
 }
