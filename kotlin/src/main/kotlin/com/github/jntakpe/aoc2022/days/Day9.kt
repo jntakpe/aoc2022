@@ -11,79 +11,57 @@ object Day9 : Day {
         .map { (dir, steps) -> dir.first() to steps.toInt() }
 
     override fun part1(): Int {
-        val visited = buildSet<Position> {
-            var headPosition = Position()
-            var tailPosition = Position()
+        return buildSet {
+            val headPosition = Position()
+            val tailPosition = Position()
             for ((dir, steps) in input) {
                 repeat(steps) {
-                    headPosition = headPosition.move(dir)
-                    tailPosition = tailPosition.follow(headPosition)
-                    add(tailPosition)
+                    headPosition.move(dir)
+                    tailPosition.follow(headPosition)
+                    add(tailPosition.copy())
                 }
             }
-        }
-        return visited.size
+        }.size
     }
+
 
     override fun part2(): Int {
-        val visited = buildSet<Position> {
-            var headPosition = Position()
-            var tailPosition1 = Position()
-            var tailPosition2 = Position()
-            var tailPosition3 = Position()
-            var tailPosition4 = Position()
-            var tailPosition5 = Position()
-            var tailPosition6 = Position()
-            var tailPosition7 = Position()
-            var tailPosition8 = Position()
-            var tailPosition9 = Position()
+        return buildSet {
+            val positions = buildMap { (0..9).forEach { put(it, Position()) } }
             for ((dir, steps) in input) {
                 repeat(steps) {
-                    headPosition = headPosition.move(dir)
-                    tailPosition1 = tailPosition1.follow(headPosition)
-                    tailPosition2 = tailPosition2.follow(tailPosition1)
-                    tailPosition3 = tailPosition3.follow(tailPosition2)
-                    tailPosition4 = tailPosition4.follow(tailPosition3)
-                    tailPosition5 = tailPosition5.follow(tailPosition4)
-                    tailPosition6 = tailPosition6.follow(tailPosition5)
-                    tailPosition7 = tailPosition7.follow(tailPosition6)
-                    tailPosition8 = tailPosition8.follow(tailPosition7)
-                    tailPosition9 = tailPosition9.follow(tailPosition8)
-                    add(tailPosition9)
+                    positions.forEach { (k, v) ->
+                        if (k == 0) v.move(dir) else v.follow(positions.getValue(k - 1))
+                        if (k == 9) add(v.copy())
+                    }
                 }
             }
-        }
-        return visited.size
+        }.size
     }
 
-    data class Position(val x: Int = 0, val y: Int = 0) {
+    data class Position(var x: Int = 0, var y: Int = 0) {
 
-        fun move(direction: Char): Position {
-            return when (direction) {
-                'L' -> copy(x = x - 1)
-                'R' -> copy(x = x + 1)
-                'D' -> copy(y = y - 1)
-                'U' -> copy(y = y + 1)
+        fun move(direction: Char) {
+            when (direction) {
+                'L' -> this.x = x - 1
+                'R' -> this.x = x + 1
+                'D' -> this.y = y - 1
+                'U' -> this.y = y + 1
                 else -> error("Unknown direction")
             }
         }
 
-        fun follow(position: Position): Position {
-            return when {
-                isAdjacent(position) -> this
-                else -> {
-                    val relX = x - position.x
-                    val newPosition = when {
-                        relX > 0 -> move('L')
-                        relX < 0 -> move('R')
-                        else -> this
-                    }
-                    val relY = y - position.y
-                    when {
-                        relY > 0 -> newPosition.move('D')
-                        relY < 0 -> newPosition.move('U')
-                        else -> newPosition
-                    }
+        fun follow(position: Position) {
+            if (!isAdjacent(position)) {
+                val relX = x - position.x
+                when {
+                    relX > 0 -> move('L')
+                    relX < 0 -> move('R')
+                }
+                val relY = y - position.y
+                when {
+                    relY > 0 -> move('D')
+                    relY < 0 -> move('U')
                 }
             }
         }
