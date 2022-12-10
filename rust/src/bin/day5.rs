@@ -2,6 +2,8 @@ use itertools::Itertools;
 
 use aoc_2022::shared::{read_input_lines_preserving_empty, Day};
 
+type Instructions = Vec<(usize, usize, usize)>;
+
 fn main() {
     Day5 {
         input: read_input_lines_preserving_empty(5),
@@ -51,7 +53,7 @@ impl Day5 {
         stacks.get_mut(to).unwrap().extend(crates)
     }
 
-    fn parse(&self) -> (Vec<Vec<char>>, Vec<(usize, usize, usize)>) {
+    fn parse(&self) -> (Vec<Vec<char>>, Instructions) {
         let (stacks, moves) = self.input.split(|s| s.is_empty()).collect_tuple().unwrap();
         (Self::stacks(stacks), Self::moves(moves))
     }
@@ -78,7 +80,7 @@ impl Day5 {
             .collect()
     }
 
-    fn moves(input: &[String]) -> Vec<(usize, usize, usize)> {
+    fn moves(input: &[String]) -> Instructions {
         input
             .iter()
             .map(|l| {
