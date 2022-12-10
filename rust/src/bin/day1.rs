@@ -1,9 +1,10 @@
-use aoc_2022::shared::{Day, read_input_lines_preserving_empty};
+use aoc_2022::shared::{read_input_lines_preserving_empty, Day};
 
 fn main() {
     Day1 {
-        input: read_input_lines_preserving_empty(1)
-    }.run()
+        input: read_input_lines_preserving_empty(1),
+    }
+    .run()
 }
 
 struct Day1 {
@@ -19,12 +20,9 @@ impl Day1 {
     }
 }
 
-impl Day for Day1 {
+impl Day<usize> for Day1 {
     fn part1(&self) -> usize {
-        *self.elves_calories()
-            .iter()
-            .max()
-            .unwrap()
+        *self.elves_calories().iter().max().unwrap()
     }
 
     fn part2(&self) -> usize {
@@ -51,21 +49,12 @@ mod tests {
     fn sample_day() -> Day1 {
         Day1 {
             input: vec![
-                "1000",
-                "2000",
-                "3000",
-                "",
-                "4000",
-                "",
-                "5000",
-                "6000",
-                "",
-                "7000",
-                "8000",
-                "9000",
-                "",
-                "10000",
-            ].iter().map(|s| s.to_string()).collect()
+                "1000", "2000", "3000", "", "4000", "", "5000", "6000", "", "7000", "8000", "9000",
+                "", "10000",
+            ]
+            .iter()
+            .map(|s| s.to_string())
+            .collect(),
         }
     }
 }

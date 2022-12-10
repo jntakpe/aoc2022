@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::time::SystemTime;
@@ -30,17 +31,28 @@ fn open_file(day: usize) -> File {
     File::open(&filename).unwrap_or_else(|_| panic!("Unable to open file: '{}'", &filename))
 }
 
-pub trait Day {
-    fn part1(&self) -> usize;
+pub trait Day<T>
+where
+    T: Display + Sized,
+{
+    fn part1(&self) -> T;
 
-    fn part2(&self) -> usize;
+    fn part2(&self) -> T;
 
     fn run(&self) {
         let now = SystemTime::now();
         let part1 = self.part1();
-        println!("Part 1: {} in {} ms", part1, now.elapsed().unwrap().as_millis());
+        println!(
+            "Part 1: {} in {} ms",
+            part1,
+            now.elapsed().unwrap().as_millis()
+        );
         let now = SystemTime::now();
         let part2 = self.part2();
-        println!("Part 2: {} in {} ms", part2, now.elapsed().unwrap().as_millis());
+        println!(
+            "Part 2: {} in {} ms",
+            part2,
+            now.elapsed().unwrap().as_millis()
+        );
     }
 }

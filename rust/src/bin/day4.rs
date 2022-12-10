@@ -22,7 +22,7 @@ struct Day4 {
     input: Vec<(RangeInclusive<usize>, RangeInclusive<usize>)>,
 }
 
-impl Day for Day4 {
+impl Day<usize> for Day4 {
     fn part1(&self) -> usize {
         self.input
             .iter()

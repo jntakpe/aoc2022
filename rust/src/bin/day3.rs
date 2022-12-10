@@ -19,7 +19,7 @@ impl Day3 {
     }
 }
 
-impl Day for Day3 {
+impl Day<usize> for Day3 {
     fn part1(&self) -> usize {
         self.input
             .iter()
