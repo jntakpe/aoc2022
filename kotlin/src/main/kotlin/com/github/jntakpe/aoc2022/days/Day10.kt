@@ -16,44 +16,32 @@ object Day10 : Day {
         }
 
     override fun part1(): Int {
-        val cycles = mutableListOf(1)
-        input.forEach {
-            it.exec(cycles)
-        }
+        val cycles = cycles()
         return listOf(20, 60, 100, 140, 180, 220).sumOf { it * cycles[it - 1] }
     }
 
-
     override fun part2(): List<String> {
-        val cycles = mutableListOf(1)
-        input.forEach {
-            it.exec(cycles)
-        }
-        return cycles.asSequence()
-            .mapIndexed { idx, x -> if (abs((idx % 40) - x) <= 1) '#' else '.' }
-            .chunked(40)
+        val chunk = 40
+        return cycles()
+            .mapIndexed { idx, x -> if (abs((idx % chunk) - x) <= 1) '#' else '.' }
+            .chunked(chunk)
             .map { it.joinToString("") }
-            .onEach { println(it) }
-            .take(6).toList()
     }
+
+    private fun cycles() = input.fold(mutableListOf(1)) { acc, cmd -> acc.also { it.addAll(cmd.exec(it)) } }.take(240)
 
     sealed interface Instruction {
 
-        fun exec(state: MutableList<Int>)
+        fun exec(state: List<Int>): List<Int>
 
         object Noop : Instruction {
 
-            override fun exec(state: MutableList<Int>) {
-                state.add(state.last())
-            }
+            override fun exec(state: List<Int>) = listOf(state.last())
         }
 
         class AddX(private val x: Int) : Instruction {
 
-            override fun exec(state: MutableList<Int>) {
-                state.add(state.last())
-                state.add(state.last() + x)
-            }
+            override fun exec(state: List<Int>) = state.last().let { listOf(it, it + x) }
         }
     }
 }
