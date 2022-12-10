@@ -66,7 +66,7 @@ object Day9 : Day {
             }
         }
 
-        fun isAdjacent(position: Position) = abs(x - position.x) <= 1 && abs(y - position.y) <= 1
+        private fun isAdjacent(position: Position) = abs(x - position.x) <= 1 && abs(y - position.y) <= 1
 
     }
 }
