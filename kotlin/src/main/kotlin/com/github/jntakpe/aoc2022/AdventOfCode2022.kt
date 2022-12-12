@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
         9 -> Day9.run()
         10 -> Day10.run()
         11 -> Day11.run()
-//        12 -> Day12.run()
+        12 -> Day12.run()
 //        13 -> Day13.run()
 //        14 -> Day14.run()
 //        15 -> Day15.run()
