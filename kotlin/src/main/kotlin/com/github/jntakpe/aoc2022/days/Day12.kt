@@ -2,47 +2,32 @@ package com.github.jntakpe.aoc2022.days
 
 import com.github.jntakpe.aoc2022.shared.Day
 import com.github.jntakpe.aoc2022.shared.readInputLines
+import java.util.*
 
 object Day12 : Day {
 
     override val input = readInputLines(12).map { it.toCharArray() }.toTypedArray()
 
-    override fun part1(): Int {
-        return solve(false)
+    override fun part1() = solve(listOf(NodeDistance(Node.START, 0)))
 
-    }
+    override fun part2() = solve((findNode('a') + Node.START).map { NodeDistance(it, 0) })
 
-    override fun part2(): Int {
-        return solve(true)
-    }
-
-    private fun solve(isPart2: Boolean): Int {
-        val deque = ArrayDeque<Pair<Node, Int>>()
+    private fun solve(startingNodes: List<NodeDistance>): Int {
+        val queue = PriorityQueue(startingNodes)
         val visited = mutableSetOf<Node>()
-        deque.add(Node.START to 0)
-        if (isPart2) {
-            deque.addAll(findNode('a').map { it to 0 })
-        }
-        while (deque.isNotEmpty()) {
-            val (node, dist) = deque.removeFirst()
-            if (node in visited) {
-                continue;
-            }
+        while (queue.isNotEmpty()) {
+            val (node, dist) = queue.poll()
+            if (node in visited) continue;
             visited.add(node)
-            if (node == Node.END) {
-                return dist
-            }
-            val adjacent = node.adjacent()
-            val sortedBy = buildList {
-                for (adj in adjacent) {
-                    if (node.distance(adj) < 2) {
-                        add(adj to dist + 1)
-                    }
-                }
-            }.sortedBy { it.first.char - node.char }
-            deque.addAll(sortedBy)
+            if (node == Node.END) return dist
+            queue.addAll(node.adjacent().filter { node.distance(it) < 2 }.map { NodeDistance(it, dist + 1) })
         }
-        return -1
+        error("Unable to find a path")
+    }
+
+    data class NodeDistance(val node: Node, val distance: Int) : Comparable<NodeDistance> {
+
+        override fun compareTo(other: NodeDistance) = distance.compareTo(other.distance)
     }
 
     data class Node(val char: Char, val x: Int, val y: Int) {
