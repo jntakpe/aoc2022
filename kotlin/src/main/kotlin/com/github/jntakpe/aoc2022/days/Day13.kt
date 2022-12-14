@@ -1,6 +1,5 @@
 package com.github.jntakpe.aoc2022.days
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.jntakpe.aoc2022.shared.Day
 import com.github.jntakpe.aoc2022.shared.readInputSplitOnBlank
 
@@ -9,7 +8,7 @@ object Day13 : Day {
     override val input = parse()
 
     override fun part1(): Int {
-        return input.mapIndexedNotNull { index, (a, b) -> index.takeIf { a <= b } }.map { it + 1 }.sum()
+        return input.mapIndexedNotNull { index, (a, b) -> index.takeIf { a <= b } }.sumOf { it + 1 }
     }
 
     override fun part2(): Int {
@@ -20,7 +19,7 @@ object Day13 : Day {
     }
 
     @JvmInline
-    value class Packets(private val value: Any) : Comparable<Packets> {
+    value class Packets(val value: Any) : Comparable<Packets> {
 
         override fun compareTo(other: Packets): Int {
             return when {
@@ -47,5 +46,27 @@ object Day13 : Day {
             .map { (l1, l2) -> parsePair(l1) to parsePair(l2) }
     }
 
-    private fun parsePair(input: String) = Packets(ObjectMapper().readValue(input, List::class.java))
+    private fun parsePair(input: String): Packets {
+        val raw = input.drop(1).dropLast(1)
+        if (raw.isEmpty()) return Packets(emptyList<Any>())
+        val list = buildList {
+            var inside = ""
+            var brackets = 0
+            fun parseInside(): Any {
+                return if (inside.toIntOrNull() != null) inside.toInt() else parsePair(inside).value
+            }
+            for (c in raw) {
+                if (c == '[') brackets++
+                if (c == ']') brackets--
+                if (c == ',' && brackets == 0) {
+                    add(parseInside())
+                    inside = ""
+                } else {
+                    inside += c
+                }
+            }
+            add(parseInside())
+        }
+        return Packets(list)
+    }
 }
