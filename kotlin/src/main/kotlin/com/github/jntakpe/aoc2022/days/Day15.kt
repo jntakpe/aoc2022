@@ -21,7 +21,7 @@ object Day15 : Day {
 
     override fun part2(): Long {
         val max = 4000000
-        input.forEach { (sensor, beacon, distance) ->
+        input.forEach { (sensor, _, distance) ->
             for (distanceX in 0..(distance + 1)) {
                 val distanceY = distance + 1 - distanceX
                 for ((dirX, dirY) in listOf(-1 to -1, -1 to 1, 1 to -1, 1 to 1)) {
@@ -35,20 +35,6 @@ object Day15 : Day {
         }
         return -1
     }
-
-//    private fun bfs(start: SensorBeacon, noBeaconY: Int): List<Int> {
-//        val visited = mutableSetOf<Position>()
-//        val queue: Queue<Pair<Position, Int>> = LinkedList()
-//        queue.add(start.sensor to 0)
-//        while (queue.isNotEmpty()) {
-//            val (position, dist) = queue.poll()
-//            if (position in visited) continue
-//            if (position == start.beacon) {
-//                return listOf()
-//            }
-//
-//        }
-//    }
 
     data class Position(val x: Long, val y: Long)
 
