@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
         17 -> Day17.run()
         18 -> Day18.run()
         19 -> Day19.run()
-//        20 -> Day20.run()
+        20 -> Day20.run()
 //        21 -> Day21.run()
 //        22 -> Day22.run()
 //        23 -> Day23.run()
