@@ -13,6 +13,21 @@ Implementing puzzles from the great [Advent of Code 2022](https://adventofcode.c
 | 5 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day5.kt))|
 6 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day6.kt))|
 7 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day7.kt))|
-8 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day8.kt)) | 9 | 10 | 11 |
-| 12 | 13 | 14 | 15 | 16 | 17 | 18 |
-| 19 | 20 | 21 | 22 | 23 | 24 | 25 |
+8 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day8.kt)) |
+9 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day9.kt))|
+10 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day10.kt))|
+11 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day11.kt))|
+| 12 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day12.kt))|
+13 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day13.kt))|
+14 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day14.kt))|
+15 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day15.kt))|
+16 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day16.kt))|
+17 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day17.kt))|
+18 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day18.kt))|
+| 19 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day19.kt))|
+20 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day20.kt))|
+21 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day21.kt))|
+22 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day22.kt))|
+23 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day23.kt))|
+24 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day24.kt))|
+25 ([Kotlin](kotlin/src/main/kotlin/com/github/jntakpe/aoc2022/days/Day25.kt))|
