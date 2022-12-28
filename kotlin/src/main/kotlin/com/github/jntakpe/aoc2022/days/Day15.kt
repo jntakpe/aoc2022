@@ -20,7 +20,7 @@ object Day15 : Day {
     }
 
     override fun part2(): Long {
-        val max = 4000000
+        val max = if (isTest()) 20 else 4000000
         input.forEach { (sensor, _, distance) ->
             for (distanceX in 0..(distance + 1)) {
                 val distanceY = distance + 1 - distanceX
@@ -35,6 +35,8 @@ object Day15 : Day {
         }
         return -1
     }
+
+    private fun isTest() = input.maxOf { it.sensor.x } <= 100
 
     data class Position(val x: Long, val y: Long)
 

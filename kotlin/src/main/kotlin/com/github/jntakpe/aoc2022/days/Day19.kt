@@ -11,7 +11,8 @@ object Day19 : Day {
 
     override fun part1() = input.sumOf { dfs(it, 24) * it.index }
 
-    override fun part2() = input.take(3).map { dfs(it, 32) }.reduce(Int::times)
+    override fun part2() =
+        if (isTest()) TODO("Understand why it takes so long") else input.take(3).map { dfs(it, 32) }.reduce(Int::times)
 
     private fun dfs(blueprint: Blueprint, time: Int): Int {
         var result = 0
@@ -55,6 +56,9 @@ object Day19 : Day {
         }
         return result
     }
+
+    //TODO understand why it so slow with test data
+    private fun isTest() = input.size <= 2
 
     data class State(val resources: Resources, val robots: Resources, val time: Int)
 
